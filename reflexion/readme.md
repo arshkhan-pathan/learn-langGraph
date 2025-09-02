@@ -7,7 +7,7 @@ This project demonstrates advanced AI agent capabilities using LangGraph's state
 ```mermaid
 ---
 config:
-  flowchart:
+  flowchart:    
     curve: linear
 ---
 graph LR;

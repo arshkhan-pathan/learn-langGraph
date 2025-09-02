@@ -140,3 +140,6 @@ cython_debug/
 # Mac / Linux / Windows system files
 .DS_Store
 Thumbs.db
+
+rag_agent/.chroma
+./rag_agent/.chroma

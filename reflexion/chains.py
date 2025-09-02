@@ -1,7 +1,7 @@
 import datetime
-
+import os
 from dotenv import load_dotenv
-
+from langchain_google_genai import ChatGoogleGenerativeAI
 load_dotenv()
 
 from langchain_core.messages import HumanMessage
@@ -14,7 +14,14 @@ from langchain_openai import ChatOpenAI
 
 from schemas import AnswerQuestion, ReviseAnswer
 
-llm = ChatOpenAI(model="gpt-4o-mini")
+# llm = ChatOpenAI(model="gpt-4o-mini")
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",               # Model options include "gemini-pro", "gemini-2.5-flash", etc.
+)
+
+
+
+
 parser = JsonOutputToolsParser(return_id=True)
 parser_pydantic = PydanticToolsParser(tools=[AnswerQuestion])
 
