@@ -45,7 +45,7 @@ def grade_generation_grounded_in_documents_and_question(state: GraphState) -> st
         return "not supported"
 
 
-def route_note(state: GraphState) -> str:
+def route_node(state: GraphState) -> str:
     print("---ROUTE QUESTION---")
     question = state["question"]
     source = question_router.invoke({"question": question})
@@ -62,7 +62,7 @@ workflow.add_node(WEBSEARCH, web_search)
 workflow.add_node(GRADE_DOCUMENTS, grade_documents)
 workflow.add_node(GENERATE, generate)
 
-workflow.set_conditional_entry_point(route_note, {RETRIEVE: RETRIEVE, WEBSEARCH: WEBSEARCH})
+workflow.set_conditional_entry_point(route_node, {RETRIEVE: RETRIEVE, WEBSEARCH: WEBSEARCH})
 workflow.add_edge(RETRIEVE, GRADE_DOCUMENTS)
 
 workflow.add_conditional_edges(GRADE_DOCUMENTS, should_continue, {
@@ -84,6 +84,17 @@ workflow.add_edge(WEBSEARCH, GENERATE)
 
 app = workflow.compile()
 
-app.get_graph().draw_mermaid_png(output_file_path="graph.png")
+if __name__ == "__main__":
 
-print(app.invoke(input={"question": "Tell me about F1 movie"}))
+    app.get_graph().draw_mermaid_png(output_file_path="graph.png")
+
+    input_1 = "Tell me how to make chicken curry"
+    input_2 = "Tell me about the F1 Movie"
+    app.invoke(input={"question" : input_1})
+
+
+
+    # for partial_response in app.stream(input={"question": "Tell me about F1 movie with streaming"},
+    #                                    stream_mode="messages"):
+    #     if partial_response[0].content:
+    #         print(partial_response[0].content, end="|", flush=True)

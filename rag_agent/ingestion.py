@@ -1,3 +1,15 @@
+# Add this at the very top of ingestion.py
+import asyncio
+import threading
+
+# Set up event loop before any other imports
+try:
+    loop = asyncio.get_event_loop()
+except RuntimeError:
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+
 from dotenv import load_dotenv
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_chroma import Chroma
